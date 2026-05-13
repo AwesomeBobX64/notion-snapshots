@@ -1,0 +1,55 @@
+{
+  "name": "notion-snapshots",
+  "version": "1.0.0",
+  "description": "A local-first Notion snapshots tool.",
+  "type": "module",
+  "bin": {
+    "notion-snapshots": "./dist/notion-snapshots"
+  },
+  "scripts": {
+    "build": "rm -rf dist && bun build --compile ./src/cli/index.ts --outfile ./dist/notion-snapshots",
+    "build:darwin-arm64": "sh ./scripts/build-release-target.sh bun-darwin-arm64 ./dist/notion-snapshots-darwin-arm64",
+    "build:darwin-x64": "sh ./scripts/build-release-target.sh bun-darwin-x64 ./dist/notion-snapshots-darwin-x64",
+    "build:linux-arm64": "sh ./scripts/build-release-target.sh bun-linux-arm64 ./dist/notion-snapshots-linux-arm64",
+    "build:linux-x64": "sh ./scripts/build-release-target.sh bun-linux-x64 ./dist/notion-snapshots-linux-x64",
+    "build:release": "rm -rf dist && bun run build:darwin-arm64 && bun run build:darwin-x64 && bun run build:linux-arm64 && bun run build:linux-x64",
+    "complexity": "bun ./scripts/complexity-report.mjs",
+    "complexity:check": "eslint \"src/**/*.ts\" \"test/**/*.ts\"",
+    "dev": "bun ./src/cli/index.ts",
+    "lint": "eslint \"src/**/*.ts\" \"test/**/*.ts\" --rule 'complexity: off'",
+    "lint:fix": "eslint \"src/**/*.ts\" \"test/**/*.ts\" --rule 'complexity: off' --fix",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "keywords": [
+    "notion",
+    "cli",
+    "snapshot",
+    "migration"
+  ],
+  "engines": {
+    "bun": ">=1.3.14"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@notionhq/client": "^5.21.0",
+    "commander": "^14.0.3",
+    "dotenv": "^17.4.2",
+    "mime-types": "^3.0.2",
+    "p-limit": "^7.3.0",
+    "pino": "^10.3.1",
+    "tar": "^7.5.15",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@types/mime-types": "^3.0.1",
+    "@types/node": "^25.7.0",
+    "@typescript-eslint/eslint-plugin": "^8.59.3",
+    "@typescript-eslint/parser": "^8.59.3",
+    "bun-types": "^1.3.14",
+    "eslint": "^10.3.0",
+    "typescript": "^6.0.3"
+  }
+}
